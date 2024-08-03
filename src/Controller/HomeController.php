@@ -8,9 +8,9 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class HomeController extends AbstractController
 {
-    #[Route("/{any}", name: "vue", requirements: ["any" => "^(?!api|_[_]).*"])]
-    public function index(): Response
-    {
-        return $this->render('base.html.twig');
-    }
+//    #[Route("/{any}", name: "vue", requirements: ["any" => "^(?!api|_[_]).*"])]
+//    public function index(): Response
+//    {
+//        return $this->render('base.html.twig');
+//    }
 }
