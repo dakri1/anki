@@ -6,8 +6,12 @@ use App\Repository\FolderRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Vich\UploaderBundle\Entity\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+
 
 #[ORM\Entity(repositoryClass: FolderRepository::class)]
+#[Vich\Uploadable()]
 class Folder
 {
     #[ORM\Id]
@@ -30,7 +34,14 @@ class Folder
 
     #[ORM\Column(length: 255)]
     #[ORM\JoinColumn(nullable: true)]
+    #[Vich\UploadableField(mapping: 'folder_image', fileNameProperty: 'image')]
     private ?string $image = null;
+
+    #[Vich\UploadableField(mapping: 'folder_image', fileNameProperty: 'image')]
+    private ?File $imageFile = null;
+
+    #[ORM\Column(options: ['default' => false])]
+    private ?bool $isPublished = null;
 
     public function __construct()
     {
@@ -108,8 +119,35 @@ class Folder
         return $this;
     }
 
+    public function setImageFile(?File $imageFile = null): void
+    {
+        $this->imageFile = $imageFile;
+
+        if ($imageFile) {
+            // Устанавливаем дату обновления, чтобы VichUploader знал, что нужно перезаписать файл
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+    }
+
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
     public function __toString(): string
     {
-        return sprintf("%s, %s", $this->name, $this->getLevel()->getName());
+        return sprintf("%s %s %s", $this->getLevel()->getLanguage()->getName(), $this->name, $this->getLevel()->getName());
+    }
+
+    public function isPublished(): ?bool
+    {
+        return $this->isPublished;
+    }
+
+    public function setIsPublished(bool $isPublished): static
+    {
+        $this->isPublished = $isPublished;
+
+        return $this;
     }
 }

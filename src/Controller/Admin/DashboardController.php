@@ -49,11 +49,11 @@ class DashboardController extends AbstractDashboardController
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
-        yield MenuItem::linkToCrud('Language', 'fa fa-question-circle', Language::class);
-        yield MenuItem::linkToCrud('Level', 'fa fa-question-circle', Level::class);
-        yield MenuItem::linkToCrud('Card', 'fa fa-question-circle', Card::class);
-        yield MenuItem::linkToCrud('Folder', 'fa fa-question-circle', Folder::class);
-        yield MenuItem::linkToCrud('User', 'fa fa-question-circle', User::class);
+        yield MenuItem::linkToCrud('Языки', 'fa fa-language', Language::class);
+        yield MenuItem::linkToCrud('Уровни', 'fa fa-layer-group', Level::class);
+        yield MenuItem::linkToCrud('Колоды', 'fa fa-folder', Folder::class);
+        yield MenuItem::linkToCrud('Карточки', 'fa fa-clipboard', Card::class);
+        yield MenuItem::linkToCrud('Пользователи', 'fa fa-users', User::class);
     }
 
     public function configureActions(): Actions

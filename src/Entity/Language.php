@@ -24,6 +24,9 @@ class Language
     #[ORM\OneToMany(targetEntity: Level::class, mappedBy: 'language')]
     private Collection $levels;
 
+    #[ORM\Column(options: ['default' => false])]
+    private ?bool $isPublished = null;
+
     public function __construct()
     {
         $this->levels = new ArrayCollection();
@@ -79,5 +82,17 @@ class Language
     public function __toString(): string
     {
         return $this->name;
+    }
+
+    public function isPublished(): ?bool
+    {
+        return $this->isPublished;
+    }
+
+    public function setIsPublished(bool $isPublished): static
+    {
+        $this->isPublished = $isPublished;
+
+        return $this;
     }
 }
